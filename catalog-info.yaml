@@ -1,0 +1,13 @@
+
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: backstage-terraform-gcp-project
+  description: A template for creating and managing projects in [backstage.io](https://www.backstage.io/)
+  annotations:
+     backstage.io/techdocs-ref: dir:./templates/docs
+     github.com/project-slug: rawanbadawi/backstage-terraform-gcp-project
+spec:
+  type: service
+  owner: rawanbadawi
+  lifecycle: experimental

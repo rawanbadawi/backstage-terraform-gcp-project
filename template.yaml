@@ -1,0 +1,118 @@
+
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+# some metadata about the template itself
+metadata:
+  name: terraform
+  title: Project Factory
+  description: Create add a new project within project factory via terraform
+spec:
+  owner: github.com/rawanbadawi
+  type: service
+
+  # these are the steps which are rendered in the frontend with the form input
+  parameters:
+    - title: Create a new GCP Project
+      required:
+        - gcpProjectId
+        - prefix
+      properties:
+        gcpProjectId:
+          title: GCP project ID
+          type: string
+          description: The GCP project id to create the bucket in
+          maxLength: 10
+          pattern: '^([a-zA-Z][a-zA-Z0-9]*)(-[a-zA-Z0-9]+)*$'
+        prefix:
+          title: The project Prefix
+          type: string
+          maxLength: 5
+          description: The project prefix
+        parentFolder:
+          title: Parent folder
+          type: string
+          description: The parent folder where the project resides
+          default: 330913237170
+          enum:
+            - 330913237170
+            - 693269364476
+            - 93798036916
+          enumNames:
+            - 'rbadawi-ops'
+            - 'rbadawi-dev'
+            - 'network'
+        enabledServices:
+          title: Select services to enable
+          type: array
+          items:
+            type: string
+            enum:
+              - 'dns.googleapis.com'
+              - 'logging.googleapis.com'
+              - 'monitoring.googleapis.com'
+              - 'oslogin.googleapis.com'
+              - 'pubsub.googleapis.com'
+              - 'storage.googleapis.com'
+          uniqueItems: true
+          ui:widget: checkboxes
+        owner:
+          title: Owner
+          type: string
+          description: Owner of the component
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds:
+              - Group
+    - title: Choose a location
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          title: Repository Location
+          type: string
+          value: terraform-${{ parameters.bucket_name }}
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+        branchName:
+          title: Branch Name
+          type: string
+          description: The branch name to submit the PR with
+
+
+  # here's the steps that are executed in series in the scaffolder backend
+  steps:
+    - id: fetch-base
+      name: Fetch Base
+      action: fetch:template
+      input:
+        url: https://github.com/rawanbadawi/backstage-terraform-gcp-project/tree/main/templates/
+        values:
+          project_id: ${{ parameters.gcpProjectId }}
+          prefix: ${{ parameters.prefix }}
+          parentFolder: ${{ parameters.parentFolder }}
+          enabledServices: ${{ parameters.enabledServices }}
+          repo_name: ${{ (parameters.repoUrl | parseRepoUrl)["repo"] }}
+          repo_owner: ${{ (parameters.repoUrl | parseRepoUrl)["owner"] }}
+    - id: rename
+      name: rename main.tf to create new bucket
+      action: fs:rename
+      input:
+        files:
+          - from: ./sample-data/projects/project.yaml
+            to: ./sample-data/projects/${{ parameters.gcpProjectId}}.yaml
+
+    - id: publish
+      name: Publish
+      action: publish:github:pull-request
+      input:
+        title: New project request
+        allowedHosts: ['github.com']
+        description: Add new project ${{ parameters.gcpProjectId}} to repo
+        repoUrl: github.com?repo=${{(parameters.repoUrl | parseRepoUrl)["repo"] }}&owner=${{ (parameters.repoUrl | parseRepoUrl)["owner"] }}
+        branchName: ${{ parameters.branchName }}
+  output:
+    links:
+      - title: Go to Pull Request
+        url: ${{ steps.publish.output.remoteUrl }}

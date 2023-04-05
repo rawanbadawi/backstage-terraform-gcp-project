@@ -1,0 +1,24 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{ values.bucket_name }}
+  description: ${{ values.description }}
+  annotations:
+     github.com/project-slug: ${{ values.repo_owner }}/${{ values.repo_name }}
+spec:
+  type: service
+  owner: ${{ values.owner }}
+  lifecycle: experimental
+  providesApis:
+    - ${{ values.bucket_name }}
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: ${{ values.project_name }}
+  description: ${{ values.description }}
+spec:
+  type: internal
+  lifecycle: experimental
+  owner: rawanbadawi
+  definition: "${{ values.description }}"
