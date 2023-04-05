@@ -30,17 +30,17 @@ spec:
           description: The project prefix
         parentFolder:
           title: Parent folder
-          type: string
+          type: number
           description: The parent folder where the project resides
-          default: '330913237170'
+          default: 330913237170
           enum:
-            - '330913237170'
-            - '693269364476'
-            - '93798036916'
+            - 330913237170
+            - 693269364476
+            - 93798036916
           enumNames:
-            - rbadawi-ops
-            - rbadawi-dev
-            - network
+            - 'rbadawi-ops'
+            - 'rbadawi-dev'
+            - 'network'
         enabledServices:
           title: Select services to enable
           type: array
