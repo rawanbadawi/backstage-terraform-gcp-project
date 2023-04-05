@@ -30,7 +30,7 @@ spec:
           description: The project prefix
         parentFolder:
           title: Parent folder
-          type: number
+          type: string
           description: The parent folder where the project resides
           default: '330913237170'
           enum:
