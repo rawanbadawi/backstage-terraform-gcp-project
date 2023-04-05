@@ -19,7 +19,7 @@ billing_alert:
 
 # Folder the project will be created as children of
 folder_id: folders/${{ values.parentFolder }}
-services: ${{ values.enabledServices }}
+services: ${{ values.enabledServices | dump }}
 
 # [opt] Authoritative IAM bindings in group => [roles] format
 
