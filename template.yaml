@@ -26,7 +26,7 @@ spec:
         prefix:
           title: The project Prefix
           type: string
-          maxLength: 5
+          maxLength: 10
           description: The project prefix
         parentFolder:
           title: Parent folder
@@ -38,21 +38,21 @@ spec:
             - 693269364476
             - 93798036916
           enumNames:
-            - 'rbadawi-ops'
-            - 'rbadawi-dev'
-            - 'network'
+            - rbadawi-ops
+            - rbadawi-dev
+            - network
         enabledServices:
           title: Select services to enable
           type: array
           items:
             type: string
             enum:
-              - 'dns.googleapis.com'
-              - 'logging.googleapis.com'
-              - 'monitoring.googleapis.com'
-              - 'oslogin.googleapis.com'
-              - 'pubsub.googleapis.com'
-              - 'storage.googleapis.com'
+              - dns.googleapis.com
+              - logging.googleapis.com
+              - monitoring.googleapis.com
+              - oslogin.googleapis.com
+              - pubsub.googleapis.com
+              - storage.googleapis.com
           uniqueItems: true
           ui:widget: checkboxes
         owner:
@@ -109,7 +109,7 @@ spec:
       input:
         title: New project request
         allowedHosts: ['github.com']
-        description: Add new project ${{ parameters.gcpProjectId}} to repo
+        description: Add new project ${{parameters.prefix}}${{ parameters.gcpProjectId}} to repo
         repoUrl: github.com?repo=${{(parameters.repoUrl | parseRepoUrl)["repo"] }}&owner=${{ (parameters.repoUrl | parseRepoUrl)["owner"] }}
         branchName: ${{ parameters.branchName }}
   output:
