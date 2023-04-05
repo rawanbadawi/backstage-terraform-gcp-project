@@ -3,7 +3,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 # some metadata about the template itself
 metadata:
-  name: terraform
+  name: terraform-project
   title: Project Factory
   description: Create add a new project within project factory via terraform
 spec:
