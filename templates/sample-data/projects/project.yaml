@@ -1,7 +1,7 @@
 # skip boilerplate check
 
 # [opt] Billing account id - overrides default if set
-billing_account_id: 0090FE-ED3D81-AF8E3B
+billing_account_id: 01361A-B178B2-1F65C1
 
 # [opt] Billing alerts config - overrides default if set
 billing_alert:
