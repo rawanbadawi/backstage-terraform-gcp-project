@@ -96,12 +96,12 @@ spec:
           repo_name: ${{ (parameters.repoUrl | parseRepoUrl)["repo"] }}
           repo_owner: ${{ (parameters.repoUrl | parseRepoUrl)["owner"] }}
     - id: rename
-      name: rename main.tf to create new bucket
+      name: create projects
       action: fs:rename
       input:
         files:
           - from: ./sample-data/projects/project.yaml
-            to: ./sample-data/projects/${{ parameters.gcpProjectId}}.yaml
+            to: ./factory/sample-data/projects/${{ parameters.gcpProjectId}}.yaml
 
     - id: publish
       name: Publish
