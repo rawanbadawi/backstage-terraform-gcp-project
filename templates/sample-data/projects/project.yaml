@@ -16,7 +16,7 @@ billing_alert:
 
 # [opt] Contacts for billing alerts and important notifications
 
-
+prefix: ${{ values.prefix }}
 # Folder the project will be created as children of
 folder_id: folders/${{ values.parentFolder }}
 services: ${{ values.enabledServices | dump }}
