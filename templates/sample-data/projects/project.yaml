@@ -14,6 +14,7 @@ prefix: ${{ values.prefix }}
 # Folder the project will be created as children of
 folder_id: folders/${{ values.parentFolder }}
 services: ${{ values.enabledServices | dump }}
+create_folder: false
 
 # [opt] Authoritative IAM bindings in group => [roles] format
 
