@@ -1,6 +1,6 @@
 
 apiVersion: backstage.io/v1alpha1
-kind: Component
+kind: Template
 metadata:
   name: backstage-terraform-gcp-project
   description: A template for creating and managing projects in [backstage.io](https://www.backstage.io/)
